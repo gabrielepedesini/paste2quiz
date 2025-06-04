@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Quiz Generator</title>
+    <title>Quiz Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,96 +15,120 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 30px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            font-size: 16px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
+            padding: 60px 20px;
+            border-left: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+            background: white;
+            min-height: 100vh;
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .header h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
 
         .header p {
+            color: #666;
             font-size: 1.1rem;
-            opacity: 0.9;
+            font-weight: 400;
         }
 
-        .content {
-            padding: 40px;
+        .section {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 48px;
+            margin-bottom: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e5e7eb;
         }
 
-        .textarea-container {
-            position: relative;
-            margin-bottom: 20px;
+        .section h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 32px;
+        }
+
+        .example-text {
+            background: white;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+            font-family: 'Inter', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 14px;
+            color: #495057;
+            line-height: 1.7;
+        }
+
+        .example-text strong {
+            color: #212529;
+            margin-bottom: 16px;
+            display: block;
         }
 
         textarea {
             width: 100%;
             min-height: 200px;
             padding: 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
             font-size: 16px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Inter', 'SF Mono', Monaco, 'Cascadia Code', monospace;
             resize: vertical;
-            transition: all 0.3s ease;
-            background: #fafafa;
+            transition: all 0.2s ease;
+            background: white;
+            color: #1a1a1a;
+            line-height: 1.6;
         }
 
         textarea:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 20px rgba(79, 172, 254, 0.2);
-            background: white;
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
 
-        .example-text {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: #495057;
+        textarea::placeholder {
+            color: #999;
         }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a1a1a;
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
+            padding: 16px 32px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.2s ease;
+            margin-top: 24px;
+            display: inline-block;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+            background: #333;
+            transform: translateY(-1px);
         }
 
         .btn:active {
@@ -110,288 +137,367 @@
 
         .quiz-section {
             display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .question-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #4facfe;
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 48px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 2px solid #b9b9b9;
         }
 
         .question-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 32px;
         }
 
         .question-number {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+            background: white;
+            color: #6b7280;
             padding: 8px 16px;
             border-radius: 20px;
-            font-weight: 600;
             font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            border: 2px solid #e5e7eb;
         }
 
         .question-text {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 25px;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-top: 24px;
             line-height: 1.5;
         }
 
         .answers {
             display: grid;
-            gap: 15px;
+            gap: 12px;
+            margin-top: 32px;
         }
 
         .answer-option {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px 20px;
+            background: white;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-size: 16px;
-            position: relative;
-            overflow: hidden;
+            color: #1a1a1a;
         }
 
         .answer-option:hover {
-            background: #e3f2fd;
-            border-color: #4facfe;
-            transform: translateX(5px);
+            border-color: #007aff;
+            background: #f8f9ff;
         }
 
         .answer-option.selected {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-color: #4facfe;
+            background: #007aff;
+            border-color: #007aff;
             color: white;
-            transform: scale(1.02);
         }
 
         .answer-option.correct {
-            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-            border-color: #4caf50;
+            background: #00c851;
+            border-color: #00c851;
             color: white;
         }
 
         .answer-option.incorrect {
-            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-            border-color: #f44336;
+            background: #ff4444;
+            border-color: #ff4444;
             color: white;
         }
 
         .quiz-controls {
             display: flex;
-            justify-content: end;
+            justify-content: center;
             align-items: center;
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-        }
-
-        .score-display {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
+            margin-top: 32px;
+            padding: 24px 0;
+            border-top: 1px solid #e5e7eb;
         }
 
         .navigation {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .nav-btn {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
+            background: white;
+            color: #6b7280;
+            border: 2px solid #d1d5db;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
 
-        .nav-btn:hover {
-            background: #5a6268;
-            transform: translateY(-1px);
+        .nav-btn:hover:not(:disabled) {
+            background: #f9fafb;
+            border-color: #9ca3af;
         }
 
         .nav-btn:disabled {
-            background: #adb5bd;
+            background: #f8f9fa;
+            color: #ccc;
             cursor: not-allowed;
-            transform: none;
+        }
+
+        .nav-btn.primary {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        .nav-btn.primary:hover {
+            background: #333;
         }
 
         .results-section {
             display: none;
             text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 15px;
-            margin-top: 30px;
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 60px 48px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e5e7eb;
         }
 
         .final-score {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: #1a1a1a;
+            letter-spacing: -2px;
         }
 
         .score-message {
-            font-size: 1.3rem;
-            margin-bottom: 30px;
-            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #666;
+            line-height: 1.6;
         }
 
         .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 30px;
-            border: 1px solid #f5c6cb;
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 24px;
+            border: 2px solid #fecaca;
+            font-size: 14px;
+            display: none;
         }
 
         .detailed-review {
-            margin: 30px 0;
+            margin: 48px 0;
             text-align: left;
+        }
+
+        .detailed-review h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 32px;
+            text-align: center;
         }
 
         .review-question {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid #e9ecef;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 2px solid #e5e7eb;
         }
 
         .review-question.has-error {
-            border-left-color: #f44336;
+            border-color: #ff4848;
         }
 
         .review-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .review-question-number {
-            background: #6c757d;
-            color: white;
+            background: #f3f4f6;
+            color: #6b7280;
             padding: 6px 12px;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
+            border: 1px solid #d1d5db;
         }
 
         .review-status {
             padding: 6px 12px;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
+            border: 1px solid;
         }
 
         .review-status.correct {
-            background: #d4edda;
-            color: #155724;
+            background: #f0fdf4;
+            color: #16a34a;
+            border-color: #bbf7d0;
         }
 
         .review-status.incorrect {
-            background: #f8d7da;
-            color: #721c24;
+            background: #fef2f2;
+            color: #dc2626;
+            border-color: #fecaca;
         }
 
         .review-question-text {
             font-size: 1.1rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 24px;
             line-height: 1.5;
         }
 
         .review-answers {
             display: grid;
-            gap: 12px;
+            gap: 8px;
         }
 
         .review-answer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 18px;
-            border-radius: 10px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            transition: all 0.3s ease;
+            padding: 16px 20px;
+            border-radius: 8px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
         }
 
         .review-correct {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border-color: #28a745;
-            color: #155724;
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
         }
 
         .review-user-wrong {
-            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-            border-color: #dc3545;
-            color: #721c24;
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
         }
 
         .answer-text {
             flex: 1;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .answer-label {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 600;
             padding: 4px 8px;
-            border-radius: 12px;
+            border-radius: 4px;
             background: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .review-correct .answer-label {
-            background: rgba(21, 87, 36, 0.1);
+            background: rgba(22, 101, 52, 0.1);
         }
 
         .review-user-wrong .answer-label {
-            background: rgba(114, 28, 36, 0.1);
+            background: rgba(153, 27, 27, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #6b7280;
+            border: 2px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+            color: #374151;
+            border-color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+            
+            .section {
+                padding: 32px 24px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .question-card {
+                padding: 32px 24px;
+            }
+            
+            .results-section {
+                padding: 40px 24px;
+            }
+            
+            .final-score {
+                font-size: 3rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        .quiz-section, .results-section {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(8px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Quiz Generator</h1>
-            <p>Transform your study notes into interactive quizzes</p>
+            <h1>Quiz Generator</h1>
+            <p>Create interactive quizzes from your study materials</p>
         </div>
         
-        <div class="content">
-            <div class="input-section" id="inputSection">
-                <h2 style="margin-bottom: 20px; color: #333;">Create Your Quiz</h2>
+        <div class="input-section" id="inputSection">
+            <div class="section">
+                <h2>Create Your Quiz</h2>
                 
                 <div class="example-text">
-                    <strong>Format Example:</strong><br>
+                    <strong>Format Example:</strong>
                     @Q: What is the capital of France?<br>
                     @A: Madrid<br>
                     @A: Berlin<br>
@@ -405,36 +511,36 @@
                     @A: Mars
                 </div>
                 
-                <div class="textarea-container">
-                    <textarea 
-                        id="quizInput" 
-                        placeholder="Paste your quiz text here using the format above..."></textarea>
-                </div>
+                <textarea 
+                    id="quizInput" 
+                    placeholder="Paste your quiz text here using the format above..."></textarea>
                 
-                <button class="btn" onclick="generateQuiz()">🚀 Generate Quiz</button>
+                <button class="btn" onclick="generateQuiz()">Generate Quiz</button>
                 
-                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                <div id="errorMessage" class="error-message"></div>
             </div>
+        </div>
+        
+        <div class="quiz-section" id="quizSection">
+            <div id="questionContainer"></div>
             
-            <div class="quiz-section" id="quizSection">
-                <div id="questionContainer"></div>
-                
-                <div class="quiz-controls">
-                    <div class="navigation">
-                        <button class="nav-btn" id="prevBtn" onclick="previousQuestion()">← Previous</button>
-                        <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
-                        <button class="nav-btn" id="finishBtn" onclick="finishQuiz()" style="display: none; background: #28a745;">Finish Quiz</button>
-                    </div>
+            <div class="quiz-controls">
+                <div class="navigation">
+                    <button class="nav-btn" id="prevBtn" onclick="previousQuestion()">← Previous</button>
+                    <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">Next →</button>
+                    <button class="nav-btn primary" id="finishBtn" onclick="finishQuiz()" style="display: none;">Finish Quiz</button>
                 </div>
+            </div>
 
-                <div id="errorMessageQuiz" class="error-message" style="display: none;"></div>
-            </div>
-            
-            <div class="results-section" id="resultsSection">
-                <div class="final-score" id="finalScore">0%</div>
-                <div class="score-message" id="scoreMessage"></div>
-                <button class="btn" onclick="restartQuiz()">🔄 Try Again</button>
-                <button class="btn" onclick="newQuiz()" style="margin-left: 15px;">📝 New Quiz</button>
+            <div id="errorMessageQuiz" class="error-message"></div>
+        </div>
+        
+        <div class="results-section" id="resultsSection">
+            <div class="final-score" id="finalScore">0%</div>
+            <div class="score-message" id="scoreMessage"></div>
+            <div class="button-group">
+                <button class="btn" onclick="restartQuiz()">Try Again</button>
+                <button class="btn btn-secondary" onclick="newQuiz()">New Quiz</button>
             </div>
         </div>
     </div>
@@ -482,7 +588,6 @@
 
         function generateQuiz() {
             const input = document.getElementById('quizInput').value.trim();
-            const errorDiv = document.getElementById('errorMessage');
             
             if (!input) {
                 showError('Please enter quiz text!');
@@ -520,7 +625,6 @@
         }
 
         function hideError() {
-            document.getElementById('errorMessage').textContent = '';
             document.getElementById('errorMessage').style.display = 'none';
         }
         
@@ -531,10 +635,8 @@
         }
 
         function hideErrorQuiz() {
-            document.getElementById('errorMessageQuiz').textContent = '';
             document.getElementById('errorMessageQuiz').style.display = 'none';
         }
-
 
         function startQuiz() {
             currentQuestion = 0;
@@ -660,13 +762,13 @@
             
             let message = '';
             if (percentage >= 90) {
-                message = '🏆 Excellent! You\'ve mastered this topic!';
+                message = 'Excellent! You\'ve mastered this topic.';
             } else if (percentage >= 70) {
-                message = '👍 Great job! You have a good understanding!';
+                message = 'Great job! You have a good understanding.';
             } else if (percentage >= 50) {
-                message = '📚 Not bad! Review the material and try again!';
+                message = 'Not bad! Review the material and try again.';
             } else {
-                message = '💪 Keep studying! Practice makes perfect!';
+                message = 'Keep studying! Practice makes perfect.';
             }
             
             message += `<br><br>You got ${score} out of ${questions.length} questions correct.`;
@@ -680,7 +782,7 @@
         }
 
         function generateDetailedReview() {
-            let reviewHtml = '<div class="detailed-review"><h3 style="margin-bottom: 25px; color: #333; font-size: 1.5rem;">📋 Detailed Review</h3>';
+            let reviewHtml = '<div class="detailed-review"><h3>Review</h3>';
             
             questions.forEach((question, qIndex) => {
                 const userAnswer = userAnswers[qIndex];
@@ -688,11 +790,11 @@
                 const isCorrect = userAnswer === correctAnswer;
                 
                 reviewHtml += `
-                    <div class="review-question">
+                    <div class="review-question ${!isCorrect ? 'has-error' : ''}">
                         <div class="review-header">
                             <span class="review-question-number">Question ${qIndex + 1}</span>
                             <span class="review-status ${isCorrect ? 'correct' : 'incorrect'}">
-                                ${isCorrect ? '✅ Correct' : '❌ Incorrect'}
+                                ${isCorrect ? 'Correct' : 'Incorrect'}
                             </span>
                         </div>
                         <div class="review-question-text">${question.question}</div>
@@ -708,16 +810,16 @@
                     
                     if (isCorrectAnswer) {
                         answerClass += ' review-correct';
-                        answerLabel = '✓ Correct Answer';
+                        answerLabel = 'Correct';
                     }
                     
                     if (isUserAnswer && !isCorrectAnswer) {
                         answerClass += ' review-user-wrong';
-                        answerLabel = '✗ Your Answer';
+                        answerLabel = 'Your Answer';
                     }
                     
                     if (isUserAnswer && isCorrectAnswer) {
-                        answerLabel = '✓ Your Correct Answer';
+                        answerLabel = 'Your Answer';
                     }
                     
                     reviewHtml += `
@@ -740,14 +842,17 @@
                 existingReview.remove();
             }
             
-            const buttonsDiv = resultsSection.querySelector('.btn').parentElement;
+            const buttonsDiv = resultsSection.querySelector('.button-group');
             buttonsDiv.insertAdjacentHTML('beforebegin', reviewHtml);
         }
 
         function restartQuiz() {
             hideError();
             hideErrorQuiz();
-            document.querySelector('.detailed-review').remove();
+            const existingReview = document.querySelector('.detailed-review');
+            if (existingReview) {
+                existingReview.remove();
+            }
             
             startQuiz();
         }
@@ -756,7 +861,10 @@
             document.getElementById('inputSection').style.display = 'block';
             document.getElementById('quizSection').style.display = 'none';
             document.getElementById('resultsSection').style.display = 'none';
-            document.querySelector('.detailed-review').remove();
+            const existingReview = document.querySelector('.detailed-review');
+            if (existingReview) {
+                existingReview.remove();
+            }
             document.getElementById('quizInput').value = '';
             hideError();
             hideErrorQuiz();
