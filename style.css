@@ -151,6 +151,18 @@ textarea::placeholder {
     font-weight: 500;
     display: inline-block;
     border: 2px solid #e5e7eb;
+    margin-right: 12px;
+}
+
+.multi-choice-badge {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    border: 2px solid #fde68a;
 }
 
 .question-text {

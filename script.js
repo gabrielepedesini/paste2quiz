@@ -3,6 +3,7 @@ let currentQuestion = 0;
 let userAnswers = [];
 let score = 0;
 let quizFinished = false;
+let isMultiChoice = false;
 
 function parseQuizText(text) {
     const lines = text.split('\n').map(line => line.trim()).filter(line => line);
@@ -17,11 +18,11 @@ function parseQuizText(text) {
             currentQ = {
                 question: line.substring(3).trim(),
                 answers: [],
-                correctIndex: -1
+                correctIndices: []
             };
         } else if (line.startsWith('@A*:')) {
             if (currentQ) {
-                currentQ.correctIndex = currentQ.answers.length;
+                currentQ.correctIndices.push(currentQ.answers.length);
                 currentQ.answers.push(line.substring(4).trim());
             }
         } else if (line.startsWith('@A:')) {
@@ -48,13 +49,13 @@ function shuffleArray(array) {
 
 function randomize(questions) {
     questions.forEach(question => {
-        let correctAnswer = question.answers[question.correctIndex];
+        let correctAnswers = question.correctIndices.map(i => question.answers[i]);
         shuffleArray(question.answers);
 
+        question.correctIndices = [];
         for (let i = 0; i < question.answers.length; i++) {
-            if (question.answers[i] === correctAnswer) {
-                question.correctIndex = i;
-                break;
+            if (correctAnswers.includes(question.answers[i])) {
+                question.correctIndices.push(i);
             }
         }
     });
@@ -80,7 +81,7 @@ function generateQuiz() {
 
         for (let i = 0; i < questions.length; i++) {
             const q = questions[i];
-            if (!q.question || q.answers.length === 0 || q.correctIndex === -1) {
+            if (!q.question || q.answers.length === 0 || q.correctIndices.length === 0) {
                 showError(`Question ${i + 1} is incomplete. Make sure it has a question, answers, and a correct answer marked with @A*:`);
                 return;
             }
@@ -117,7 +118,7 @@ function hideErrorQuiz() {
 
 function startQuiz() {
     currentQuestion = 0;
-    userAnswers = new Array(questions.length).fill(-1);
+    userAnswers = new Array(questions.length).fill(null).map(() => []);
     score = 0;
     quizFinished = false;
 
@@ -132,21 +133,23 @@ function startQuiz() {
 function displayQuestion() {
     const question = questions[currentQuestion];
     const container = document.getElementById('questionContainer');
+    const isMultiChoice = question.correctIndices.length > 1;
     
     let html = `
         <div class="question-card">
             <div class="question-header">
                 <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                ${isMultiChoice ? '<div class="multi-choice-badge">Select all that apply</div>' : ''}
             </div>
             <div class="question-text">${question.question}</div>
             <div class="answers">
     `;
 
     question.answers.forEach((answer, index) => {
-        const isSelected = userAnswers[currentQuestion] === index;
-        const isCorrect = index === question.correctIndex;
-        const isIncorrect = quizFinished && isSelected && !isCorrect;
-        const showCorrect = quizFinished && isCorrect;
+        const isSelected = userAnswers[currentQuestion].includes(index);
+        const isCorrectAnswer = question.correctIndices.includes(index);
+        const isIncorrect = quizFinished && isSelected && !isCorrectAnswer;
+        const showCorrect = quizFinished && isCorrectAnswer;
         
         let classes = 'answer-option';
         if (isSelected && !quizFinished) classes += ' selected';
@@ -172,7 +175,22 @@ function displayQuestion() {
 function selectAnswer(answerIndex) {
     if (quizFinished) return;
     
-    userAnswers[currentQuestion] = answerIndex;
+    const question = questions[currentQuestion];
+    const isMultiChoice = question.correctIndices.length > 1;
+    
+    if (isMultiChoice) {
+        // Toggle selection for multi-choice
+        const index = userAnswers[currentQuestion].indexOf(answerIndex);
+        if (index > -1) {
+            userAnswers[currentQuestion].splice(index, 1);
+        } else {
+            userAnswers[currentQuestion].push(answerIndex);
+        }
+    } else {
+        // Single choice
+        userAnswers[currentQuestion] = [answerIndex];
+    }
+    
     displayQuestion();
     updateScore();
 }
@@ -180,7 +198,13 @@ function selectAnswer(answerIndex) {
 function updateScore() {
     score = 0;
     for (let i = 0; i < questions.length; i++) {
-        if (userAnswers[i] === questions[i].correctIndex) {
+        const question = questions[i];
+        const userAnswerIndices = userAnswers[i];
+        const correctIndices = question.correctIndices;
+        
+        // Check if selected answers match correct answers exactly
+        if (userAnswerIndices.length === correctIndices.length &&
+            userAnswerIndices.sort((a, b) => a - b).every((val, idx) => val === correctIndices.sort((a, b) => a - b)[idx])) {
             score++;
         }
     }
@@ -218,7 +242,7 @@ function nextQuestion() {
 }
 
 function finishQuiz() {
-    if (userAnswers.includes(-1)) {
+    if (userAnswers.some(ans => ans.length === 0)) {
         showErrorQuiz('Please answer all questions before finishing the quiz!');
         return;
     }
@@ -259,9 +283,10 @@ function generateDetailedReview() {
     let reviewHtml = '<div class="detailed-review"><h3>Review</h3>';
     
     questions.forEach((question, qIndex) => {
-        const userAnswer = userAnswers[qIndex];
-        const correctAnswer = question.correctIndex;
-        const isCorrect = userAnswer === correctAnswer;
+        const userAnswerIndices = userAnswers[qIndex];
+        const correctIndices = question.correctIndices;
+        const isCorrect = userAnswerIndices.length === correctIndices.length &&
+            userAnswerIndices.sort((a, b) => a - b).every((val, idx) => val === correctIndices.sort((a, b) => a - b)[idx]);
         
         reviewHtml += `
             <div class="review-question ${!isCorrect ? 'has-error' : ''}">
@@ -276,8 +301,8 @@ function generateDetailedReview() {
         `;
         
         question.answers.forEach((answer, aIndex) => {
-            const isUserAnswer = userAnswer === aIndex;
-            const isCorrectAnswer = correctAnswer === aIndex;
+            const isUserAnswer = userAnswerIndices.includes(aIndex);
+            const isCorrectAnswer = correctIndices.includes(aIndex);
             
             let answerClass = 'review-answer';
             let answerLabel = '';
