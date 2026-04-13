@@ -1,0 +1,138 @@
+{
+    "general": {
+        "siteName": "Paste2Quiz"
+    },
+    "home": {
+        "title": "Paste2Quiz",
+        "description": "Genera un quiz dai tuoi appunti, completalo e rivedi i risultati nel dettaglio.",
+        "cta": "Inizia Quiz",
+        "hero": {
+            "eyebrow": "Trasforma qualsiasi appunto in una sfida",
+            "titleLineOne": "Dal testo semplice",
+            "titleLineTwo": "a quiz efficaci in pochi secondi",
+            "subtitle": "Incolla i tuoi contenuti, avvia un quiz fluido e capisci subito cosa ricordi davvero.",
+            "primaryCta": "Inizia Quiz",
+            "secondaryCta": "Guarda come funziona",
+            "panelLabel": "Anteprima quiz",
+            "panelKicker": "Formato rapido, risultato completo",
+            "panelCopy": "Usa la sintassi @Q / @A e lascia che Paste2Quiz gestisca parsing, randomizzazione e analisi finale.",
+            "panelChipOne": "Generazione istantanea",
+            "panelChipTwo": "Risposta singola e multipla",
+            "panelChipThree": "Revisione dettagliata"
+        },
+        "stats": {
+            "ariaLabel": "Punti chiave del prodotto",
+            "one": {
+                "value": "1 blocco di testo",
+                "label": "per creare il quiz completo"
+            },
+            "two": {
+                "value": "2 modalita",
+                "label": "domande a scelta singola e multipla"
+            },
+            "three": {
+                "value": "100% chiarezza",
+                "label": "con punteggio e revisione risposta per risposta"
+            }
+        },
+        "features": {
+            "heading": "Perche gli studenti ci amano",
+            "subheading": "Pensato per sessioni rapide, preparazione esami e autovalutazione ripetibile.",
+            "one": {
+                "title": "Scrivi una volta, quiz immediato",
+                "description": "Zero attrito iniziale. Incolla le domande in un formato compatto e genera subito un quiz completo."
+            },
+            "two": {
+                "title": "Allenamento della memoria reale",
+                "description": "La randomizzazione di domande e risposte rende ogni tentativo diverso e piu utile."
+            },
+            "three": {
+                "title": "Revisione mirata",
+                "description": "Visualizza punteggio, risposte e punti deboli con un riepilogo finale chiaro."
+            }
+        },
+        "steps": {
+            "heading": "Come funziona",
+            "subheading": "Tre passaggi essenziali dagli appunti al miglioramento.",
+            "one": {
+                "title": "Incolla il testo del quiz",
+                "description": "Aggiungi domande e risposte usando i marcatori @Q, @A e @A*."
+            },
+            "two": {
+                "title": "Genera e rispondi",
+                "description": "Avvia il quiz, naviga tra le domande e completa le risposte con i tuoi tempi."
+            },
+            "three": {
+                "title": "Misura e migliora",
+                "description": "Concludi la sessione per vedere punteggio e revisione dettagliata di ogni domanda."
+            }
+        },
+        "finalCta": {
+            "heading": "Pronto a mettere alla prova i tuoi appunti?",
+            "description": "Apri il generatore, incolla i contenuti e avvia subito la tua prima sessione.",
+            "action": "Genera il mio quiz"
+        }
+    },
+    "header": {
+        "brand": "Paste2Quiz",
+        "home": "Home",
+        "quiz": "Quiz",
+        "toggleTheme": "Cambia tema",
+        "navigationLabel": "Navigazione principale"
+    },
+    "quiz": {
+        "create": {
+            "title": "Crea il tuo quiz",
+            "exampleLabel": "Esempio di formato:",
+            "placeholder": "Incolla qui il testo del quiz usando il formato sopra...",
+            "questionCountLabel": "Quante domande vuoi includere nel quiz?",
+            "questionCountOptional": "Opzionale",
+            "questionCountPlaceholder": "Lascia vuoto per includerle tutte",
+            "questionCountUseAll": "Usa tutte",
+            "questionCountHint": "Verrà selezionato un sottoinsieme casuale dalle domande incollate.",
+            "generate": "Genera Quiz"
+        },
+        "errors": {
+            "emptyInput": "Inserisci il testo del quiz!",
+            "noValidQuestions": "Nessuna domanda valida trovata. Controlla il formato!",
+            "incompleteQuestion": "La domanda {questionNumber} è incompleta. Assicurati che abbia domanda, risposte e almeno una risposta corretta marcata con @A*:.",
+            "invalidQuestionCount": "Inserisci un numero intero valido maggiore di 0 per il numero di domande.",
+            "questionCountExceedsAvailable": "Hai richiesto più domande di quelle disponibili. Domande valide trovate: {available}.",
+            "answerAllBeforeFinish": "Rispondi a tutte le domande prima di concludere il quiz!"
+        },
+        "question": {
+            "counter": "Domanda {current} di {total}",
+            "multiChoice": "Seleziona tutte le risposte corrette"
+        },
+        "questionNavigator": {
+            "title": "Navigatore domande",
+            "answeredCount": "{answered} risposte date su {total}",
+            "answered": "Risposta data",
+            "unanswered": "Da rispondere",
+            "questionAria": "Vai alla domanda {number}"
+        },
+        "controls": {
+            "previous": "← Precedente",
+            "next": "Successiva →",
+            "finish": "Concludi Quiz"
+        },
+        "results": {
+            "excellent": "Eccellente! Hai padroneggiato l'argomento.",
+            "great": "Ottimo lavoro! Hai una buona comprensione.",
+            "notBad": "Non male! Ripassa il materiale e riprova.",
+            "keepStudying": "Continua a studiare! La pratica rende perfetti.",
+            "scoreSummary": "Hai risposto correttamente a {score} domande su {total}.",
+            "reviewTitle": "Revisione",
+            "reviewQuestion": "Domanda {number}",
+            "correct": "Corretta",
+            "incorrect": "Errata",
+            "correctLabel": "Corretta",
+            "yourAnswer": "La tua risposta",
+            "tryAgain": "Riprova",
+            "newQuiz": "Nuovo Quiz"
+        }
+    },
+    "error": {
+        "notFound": "La pagina che stai cercando non esiste"
+    }
+}

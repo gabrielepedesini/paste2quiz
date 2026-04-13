@@ -1,0 +1,68 @@
+# ==============================
+# FRONTEND 
+# ==============================
+
+# Node.js / Yarn dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/versions
+
+# Testing
+frontend/coverage
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Production builds
+frontend/build
+
+# Misc / OS-specific
+frontend/.DS_Store
+frontend/*.pem
+
+# Debug / logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+
+# Environment files
+frontend/.env*
+
+# Vercel
+frontend/.vercel
+
+# TypeScript
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+
+# ==============================
+# BACKEND 
+# ==============================
+
+# Python virtual environment
+backend/.venv
+
+# Python cache
+**/__pycache__/
+**/*.pyc
+
+# Environment files
+backend/.env*
+
+# Logs 
+**/*.log
+
+# ==============================
+# GENERAL
+# ==============================
+
+# OS / editor files
+.DS_Store
+*.pem

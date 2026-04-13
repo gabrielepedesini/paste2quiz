@@ -1,0 +1,138 @@
+{
+    "general": {
+        "siteName": "Paste2Quiz"
+    },
+    "home": {
+        "title": "Paste2Quiz",
+        "description": "Generate a quiz from your notes, complete it, and review detailed results.",
+        "cta": "Start Quiz",
+        "hero": {
+            "eyebrow": "Turn any notes into a live challenge",
+            "titleLineOne": "From plain text",
+            "titleLineTwo": "to powerful quizzes in seconds",
+            "subtitle": "Paste your content, launch a polished quiz flow, and instantly discover what you actually remember.",
+            "primaryCta": "Start Quiz",
+            "secondaryCta": "See how it works",
+            "panelLabel": "Sample quiz snapshot",
+            "panelKicker": "Fast format, serious output",
+            "panelCopy": "Use a simple @Q / @A syntax and let Paste2Quiz handle parsing, randomization, and result analysis.",
+            "panelChipOne": "Instant generation",
+            "panelChipTwo": "Single + multi answer",
+            "panelChipThree": "Detailed review"
+        },
+        "stats": {
+            "ariaLabel": "Key product highlights",
+            "one": {
+                "value": "1 text block",
+                "label": "to generate your full quiz"
+            },
+            "two": {
+                "value": "2 modes",
+                "label": "single and multi-answer questions"
+            },
+            "three": {
+                "value": "100% clarity",
+                "label": "with score and answer-by-answer review"
+            }
+        },
+        "features": {
+            "heading": "Why learners love us",
+            "subheading": "Designed for quick drill sessions, exam prep, and self-checks that are easy to repeat.",
+            "one": {
+                "title": "Write once, quiz instantly",
+                "description": "No setup friction. Paste your questions in a compact format and generate a complete quiz flow right away."
+            },
+            "two": {
+                "title": "Built for real recall",
+                "description": "Question and answer randomization keeps every attempt fresh, so you practice understanding instead of memorizing order."
+            },
+            "three": {
+                "title": "Review what matters",
+                "description": "See your score, compare your answers, and identify exact weak spots with a clean post-quiz breakdown."
+            }
+        },
+        "steps": {
+            "heading": "How it works",
+            "subheading": "A focused three-step flow from notes to measurable progress.",
+            "one": {
+                "title": "Paste your quiz text",
+                "description": "Add questions and answers using @Q, @A and @A* markers."
+            },
+            "two": {
+                "title": "Generate and answer",
+                "description": "Launch the quiz, move across questions, and complete all answers at your pace."
+            },
+            "three": {
+                "title": "Measure and improve",
+                "description": "Finish the session to see your score and a detailed review for each question."
+            }
+        },
+        "finalCta": {
+            "heading": "Ready to challenge your notes?",
+            "description": "Open the quiz builder, paste your content, and run your first session now.",
+            "action": "Generate My Quiz"
+        }
+    },
+    "header": {
+        "brand": "Paste2Quiz",
+        "home": "Home",
+        "quiz": "Quiz",
+        "toggleTheme": "Toggle theme",
+        "navigationLabel": "Primary navigation"
+    },
+    "quiz": {
+        "create": {
+            "title": "Create your quiz",
+            "exampleLabel": "Format Example:",
+            "placeholder": "Paste your quiz text here using the format above...",
+            "questionCountLabel": "How many questions should be in the quiz?",
+            "questionCountOptional": "Optional",
+            "questionCountPlaceholder": "Leave empty to include all",
+            "questionCountUseAll": "Use all",
+            "questionCountHint": "A random subset will be selected from your pasted questions.",
+            "generate": "Generate Quiz"
+        },
+        "errors": {
+            "emptyInput": "Please enter quiz text!",
+            "noValidQuestions": "No valid questions found. Please check your format!",
+            "incompleteQuestion": "Question {questionNumber} is incomplete. Make sure it has a question, answers, and a correct answer marked with @A*:.",
+            "invalidQuestionCount": "Enter a valid whole number greater than 0 for the number of questions.",
+            "questionCountExceedsAvailable": "You requested more questions than available. Found {available} valid questions.",
+            "answerAllBeforeFinish": "Please answer all questions before finishing the quiz!"
+        },
+        "question": {
+            "counter": "Question {current} of {total}",
+            "multiChoice": "Select all that apply"
+        },
+        "questionNavigator": {
+            "title": "Question Navigator",
+            "answeredCount": "{answered} answered of {total}",
+            "answered": "Answered",
+            "unanswered": "Unanswered",
+            "questionAria": "Go to question {number}"
+        },
+        "controls": {
+            "previous": "← Previous",
+            "next": "Next →",
+            "finish": "Finish Quiz"
+        },
+        "results": {
+            "excellent": "Excellent! You've mastered this topic.",
+            "great": "Great job! You have a good understanding.",
+            "notBad": "Not bad! Review the material and try again.",
+            "keepStudying": "Keep studying! Practice makes perfect.",
+            "scoreSummary": "You got {score} out of {total} questions correct.",
+            "reviewTitle": "Review",
+            "reviewQuestion": "Question {number}",
+            "correct": "Correct",
+            "incorrect": "Incorrect",
+            "correctLabel": "Correct",
+            "yourAnswer": "Your Answer",
+            "tryAgain": "Try Again",
+            "newQuiz": "New Quiz"
+        }
+    },
+    "error": {
+        "notFound": "The page you are looking for does not exist"
+    }
+}
