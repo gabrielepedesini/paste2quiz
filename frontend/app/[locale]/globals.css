@@ -262,6 +262,14 @@ section {
     font-family: var(--font-geist-mono);
 }
 
+.site-brand-main {
+    color: var(--text);
+}
+
+.site-brand-highlight {
+    color: var(--accent);
+}
+
 .site-nav {
     margin-left: auto;
     display: flex;
@@ -761,6 +769,12 @@ section {
     flex-wrap: wrap;
 }
 
+.quiz-question-map-meta {
+    display: grid;
+    gap: 4px;
+    justify-items: end;
+}
+
 .quiz-question-map-title {
     font-size: 0.9rem;
     font-weight: 700;
@@ -770,6 +784,31 @@ section {
     font-size: 0.82rem;
     color: var(--text-muted);
     font-weight: 600;
+}
+
+.quiz-timer-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.quiz-timer-inline-label {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.quiz-timer-inline-value {
+    border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--background-tertiary));
+    background: color-mix(in srgb, var(--accent) 10%, var(--background-secondary));
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 .quiz-question-map-legend {
@@ -903,7 +942,6 @@ section {
 
 .quiz-answer:hover {
     border-color: color-mix(in srgb, var(--accent) 55%, var(--background-tertiary));
-    transform: translateY(-1px);
 }
 
 .quiz-answer-selected {
@@ -960,8 +998,16 @@ section {
 }
 
 .quiz-score-summary {
+    margin-bottom: 30px;
+    color: var(--text-muted);
+}
+
+.quiz-time-summary {
+    text-align: center;
     margin-bottom: 50px;
     color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
 }
 
 .quiz-review-title {
@@ -1311,6 +1357,14 @@ section {
 
     .quiz-question-map-grid {
         grid-template-columns: repeat(auto-fit, minmax(34px, 1fr));
+    }
+
+    .quiz-question-map-meta {
+        justify-items: start;
+    }
+
+    .quiz-timer-inline {
+        flex-wrap: wrap;
     }
 
     .quiz-question-map-button {

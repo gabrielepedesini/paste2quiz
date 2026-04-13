@@ -111,6 +111,10 @@
             "unanswered": "Da rispondere",
             "questionAria": "Vai alla domanda {number}"
         },
+        "timer": {
+            "elapsed": "Tempo",
+            "completion": "Tempo impiegato: {time}"
+        },
         "controls": {
             "previous": "← Precedente",
             "next": "Successiva →",

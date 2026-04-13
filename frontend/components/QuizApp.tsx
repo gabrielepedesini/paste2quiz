@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import {
@@ -23,6 +23,18 @@ const QUIZ_TOAST_DURATION_MS = 5000;
 
 const EXAMPLE_TEXT = `@Q: What is the capital of France?\n@A: Madrid\n@A: Berlin\n@A*: Paris\n@A: Rome\n\n@Q: Which planets are gas giants?\n@A*: Jupiter\n@A: Earth\n@A: Mars\n@A*: Saturn`;
 
+function formatElapsedTime(totalSeconds: number): string {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (hours > 0) {
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    }
+
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
 export function QuizApp() {
     const t = useTranslations("quiz");
     const { showToast } = useToast();
@@ -34,6 +46,9 @@ export function QuizApp() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [userAnswers, setUserAnswers] = useState<number[][]>([]);
     const [quizFinished, setQuizFinished] = useState(false);
+    const [quizStartTimestamp, setQuizStartTimestamp] = useState<number | null>(null);
+    const [elapsedSeconds, setElapsedSeconds] = useState(0);
+    const [completedElapsedSeconds, setCompletedElapsedSeconds] = useState<number | null>(null);
 
     const answeredQuestionsCount = useMemo(
         () => userAnswers.filter((answers) => answers.length > 0).length,
@@ -50,6 +65,27 @@ export function QuizApp() {
 
     const activeQuestion = questions[currentQuestion];
     const isLastQuestion = currentQuestion === questions.length - 1;
+    const displayedCompletionTime = completedElapsedSeconds ?? elapsedSeconds;
+    const formattedElapsedTime = formatElapsedTime(elapsedSeconds);
+    const formattedCompletionTime = formatElapsedTime(displayedCompletionTime);
+
+    useEffect(() => {
+        if (screen !== "quiz" || quizFinished || quizStartTimestamp === null) {
+            return;
+        }
+
+        const updateElapsedSeconds = (): void => {
+            const elapsedSinceStart = Math.floor((Date.now() - quizStartTimestamp) / 1000);
+            setElapsedSeconds(elapsedSinceStart);
+        };
+
+        updateElapsedSeconds();
+        const timerId = window.setInterval(updateElapsedSeconds, 1000);
+
+        return () => {
+            window.clearInterval(timerId);
+        };
+    }, [quizFinished, quizStartTimestamp, screen]);
 
     function showQuizError(message: string): void {
         showToast(message, {
@@ -122,6 +158,9 @@ export function QuizApp() {
         setCurrentQuestion(0);
         setUserAnswers(new Array(randomizedQuestions.length).fill(null).map(() => []));
         setQuizFinished(false);
+        setQuizStartTimestamp(Date.now());
+        setElapsedSeconds(0);
+        setCompletedElapsedSeconds(null);
         setScreen("quiz");
     }
 
@@ -175,6 +214,13 @@ export function QuizApp() {
             return;
         }
 
+        const finalElapsedSeconds =
+            quizStartTimestamp === null
+                ? elapsedSeconds
+                : Math.floor((Date.now() - quizStartTimestamp) / 1000);
+
+        setElapsedSeconds(finalElapsedSeconds);
+        setCompletedElapsedSeconds(finalElapsedSeconds);
         setQuizFinished(true);
         setScreen("results");
     }
@@ -183,6 +229,9 @@ export function QuizApp() {
         setCurrentQuestion(0);
         setUserAnswers(new Array(questions.length).fill(null).map(() => []));
         setQuizFinished(false);
+        setQuizStartTimestamp(Date.now());
+        setElapsedSeconds(0);
+        setCompletedElapsedSeconds(null);
         setScreen("quiz");
     }
 
@@ -193,6 +242,9 @@ export function QuizApp() {
         setCurrentQuestion(0);
         setUserAnswers([]);
         setQuizFinished(false);
+        setQuizStartTimestamp(null);
+        setElapsedSeconds(0);
+        setCompletedElapsedSeconds(null);
         setScreen("input");
     }
 
@@ -245,12 +297,13 @@ export function QuizApp() {
                     <div className="quiz-question-map" aria-label={t("questionNavigator.title")}>
                         <div className="quiz-question-map-header">
                             <p className="quiz-question-map-title">{t("questionNavigator.title")}</p>
-                            <p className="quiz-question-map-progress">
-                                {t("questionNavigator.answeredCount", {
-                                    answered: answeredQuestionsCount,
-                                    total: questions.length,
-                                })}
-                            </p>
+
+                            <div className="quiz-question-map-meta">
+                                <p className="quiz-timer-inline">
+                                    <span className="quiz-timer-inline-label">{t("timer.elapsed")}</span>
+                                    <span className="quiz-timer-inline-value">{formattedElapsedTime}</span>
+                                </p>
+                            </div>
                         </div>
 
                         <div className="quiz-question-map-legend">
@@ -392,6 +445,11 @@ export function QuizApp() {
                         {t("results.scoreSummary", {
                             score,
                             total: questions.length,
+                        })}
+                    </p>
+                    <p className="quiz-time-summary">
+                        {t("timer.completion", {
+                            time: formattedCompletionTime,
                         })}
                     </p>
 

@@ -111,6 +111,10 @@
             "unanswered": "Unanswered",
             "questionAria": "Go to question {number}"
         },
+        "timer": {
+            "elapsed": "Elapsed",
+            "completion": "Time used: {time}"
+        },
         "controls": {
             "previous": "← Previous",
             "next": "Next →",

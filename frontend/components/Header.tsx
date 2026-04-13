@@ -6,12 +6,23 @@ import { ToggleTheme } from "./ToggleTheme";
 
 export async function Header() {
     const t = await getTranslations("header");
+    const brand = t("brand");
+    const separatorIndex = brand.indexOf("2");
+    const hasSeparator = separatorIndex > 0 && separatorIndex < brand.length - 1;
 
     return (
         <header className="site-header">
             <div className="site-header-inner">
-                <Link href="/" className="site-brand">
-                    {t("brand")}
+                <Link href="/" className="site-brand" aria-label={brand}>
+                    {hasSeparator ? (
+                        <>
+                            <span className="site-brand-main">{brand.slice(0, separatorIndex)}</span>
+                            <span className="site-brand-highlight">{brand[separatorIndex]}</span>
+                            <span className="site-brand-main">{brand.slice(separatorIndex + 1)}</span>
+                        </>
+                    ) : (
+                        brand
+                    )}
                 </Link>
 
                 <nav className="site-nav" aria-label={t("navigationLabel")}>

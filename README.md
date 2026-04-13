@@ -29,5 +29,4 @@ Planned features and enhancements:
 [ ] User authentication
 [ ] Store user's quizzes
 [ ] General performance analytics
-[ ] Timed quizzes
 ```
