@@ -80,6 +80,14 @@
         "toggleTheme": "Toggle theme",
         "navigationLabel": "Primary navigation"
     },
+    "footer": {
+        "createdBy": "Created by",
+        "creatorName": "Gabriele Pedesini",
+        "github": "GitHub",
+        "githubLabel": "Open GitHub repository",
+        "linkedin": "LinkedIn",
+        "linkedinLabel": "Open LinkedIn profile"
+    },
     "quiz": {
         "create": {
             "title": "Create your quiz",
@@ -113,6 +121,7 @@
         },
         "timer": {
             "elapsed": "Elapsed",
+            "completionLabel": "Time used:",
             "completion": "Time used: {time}"
         },
         "controls": {

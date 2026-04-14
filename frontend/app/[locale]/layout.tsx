@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from "next-intl/server";
 
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { ToastProvider } from "@/components/ToastProvider";
 
 const geistSans = Geist({
@@ -45,6 +46,7 @@ export default async function RootLayout( {children, params,}: {children: React.
 						<ToastProvider>
 							<Header />
 							<main className="site-main">{children}</main>
+							<Footer />
 						</ToastProvider>
 					</NextIntlClientProvider>
 				</ThemeProvider>

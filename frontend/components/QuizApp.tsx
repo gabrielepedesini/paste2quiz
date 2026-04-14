@@ -448,9 +448,8 @@ export function QuizApp() {
                         })}
                     </p>
                     <p className="quiz-time-summary">
-                        {t("timer.completion", {
-                            time: formattedCompletionTime,
-                        })}
+                        <span className="quiz-time-summary-label">{t("timer.completionLabel")}</span>{" "}
+                        <span className="quiz-time-summary-value">{formattedCompletionTime}</span>
                     </p>
 
                     {questions.map((question, questionIndex) => {
