@@ -319,7 +319,7 @@ section {
 /* FOOTER */
 
 .site-footer {
-    margin-top: 34px;
+    margin-top: 60px;
     border-top: 1px solid color-mix(in srgb, var(--background-tertiary) 60%, transparent);
     background: var(--background-transparent-light);
     backdrop-filter: blur(8px);
@@ -330,7 +330,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
 }
 
 .site-footer-copy {
@@ -420,7 +420,6 @@ section {
 
 .lp-simple-primary,
 .lp-simple-secondary {
-    min-height: 44px;
     border-radius: 12px;
 }
 
@@ -536,11 +535,12 @@ section {
 }
 
 .lp-simple-final h2 {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    font-size: 24px;
 }
 
 .lp-simple-final p {
-    margin: 0 auto 30px;
+    margin: 0 auto 40px;
     max-width: 56ch;
     color: var(--text-muted);
 }
@@ -560,7 +560,7 @@ section {
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 480px) {
     .lp-simple-stats {
         grid-template-columns: 1fr;
     }
@@ -1363,32 +1363,30 @@ section {
     .quiz-wrapper {
         padding: 32px 16px 52px;
     }
-
-    .container {
-        padding: 0 18px;
-    }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 450px) {
     .site-header-inner {
-        min-height: 58px;
+        min-height: 68px;
         flex-wrap: wrap;
         row-gap: 8px;
         padding-top: 8px;
         padding-bottom: 8px;
+        justify-content: space-between;
     }
 
     .site-nav {
         order: 3;
         width: 100%;
         margin-left: 0;
+        display: none;
     }
 
     .site-footer-inner {
-        min-height: 88px;
+        min-height: 100px;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         padding-top: 14px;
         padding-bottom: 14px;
     }
@@ -1408,11 +1406,6 @@ section {
     .quiz-results,
     .error-page {
         padding: 18px;
-    }
-
-    .quiz-result-buttons,
-    .quiz-navigation {
-        display: grid;
     }
 
     .quiz-primary-button,
