@@ -56,7 +56,7 @@
             "subheading": "A focused three-step flow from notes to measurable progress.",
             "one": {
                 "title": "Paste your quiz text",
-                "description": "Add questions and answers using @Q, @A and @A* markers."
+                "description": "Add questions and answers using the required format."
             },
             "two": {
                 "title": "Generate and answer",
@@ -91,14 +91,30 @@
     "quiz": {
         "create": {
             "title": "Create your quiz",
-            "exampleLabel": "Format Example:",
-            "placeholder": "Paste your quiz text here using the format above...",
-            "questionCountLabel": "How many questions should be in the quiz?",
+            "placeholder": "Paste your quiz text here in the required format...",
+            "questionCountLabel": "How many questions should be randomly selected for the quiz?",
             "questionCountOptional": "Optional",
             "questionCountPlaceholder": "Leave empty to include all",
             "questionCountUseAll": "Use all",
             "questionCountHint": "A random subset will be selected from your pasted questions.",
-            "generate": "Generate Quiz"
+            "generate": "Generate Quiz",
+            "formatHelp": {
+                "showToggle": "How to format the quiz text?",
+                "hideToggle": "Hide format help",
+                "intro": "Use this structure so Paste2Quiz can parse your content correctly:",
+                "ruleQuestion": "Start each question with @Q:",
+                "ruleAnswer": "Add wrong answers with @A:",
+                "ruleCorrect": "Mark every correct answer with @A*:",
+                "ruleSpacing": "Leave one empty line between questions for readability.",
+                "exampleLabel": "Format example",
+                "exampleTemplate": "@Q: What is the capital of France?\n@A: Madrid\n@A: Berlin\n@A*: Paris\n@A: Rome\n\n@Q: Which planets are gas giants?\n@A*: Jupiter\n@A: Earth\n@A: Mars\n@A*: Saturn",
+                "basePromptLabel": "Base prompt to generate questions from your sources",
+                "basePromptHint": "Copy this prompt, paste it into your AI tool accompanied by your notes or material.",
+                "basePromptTemplate": "Turn the following source into a quiz using EXACTLY this syntax:\n\n@Q: question text\n@A: wrong answer\n@A*: correct answer\n\nRules:\n- Include 4 answers per question.\n- Include at least 1 correct answer (@A*).\n- For multi-answer questions, mark all correct options with @A*.\n- Return only quiz content in this format. No intro or explanation.",
+                "copyButton": "Copy prompt",
+                "copySuccess": "Prompt copied",
+                "copyError": "Could not copy the base prompt. Please copy it manually."
+            }
         },
         "errors": {
             "emptyInput": "Please enter quiz text!",

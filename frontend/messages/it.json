@@ -56,7 +56,7 @@
             "subheading": "Tre passaggi essenziali dagli appunti al miglioramento.",
             "one": {
                 "title": "Incolla il testo del quiz",
-                "description": "Aggiungi domande e risposte usando i marcatori @Q, @A e @A*."
+                "description": "Aggiungi domande e risposte usando il formato richiesto."
             },
             "two": {
                 "title": "Genera e rispondi",
@@ -91,14 +91,30 @@
     "quiz": {
         "create": {
             "title": "Crea il tuo quiz",
-            "exampleLabel": "Esempio di formato:",
-            "placeholder": "Incolla qui il testo del quiz usando il formato sopra...",
-            "questionCountLabel": "Quante domande vuoi includere nel quiz?",
+            "placeholder": "Incolla qui il testo del quiz usando il formato richiesto...",
+            "questionCountLabel": "Quante domande vuoi includere in maniera casuale nel quiz?",
             "questionCountOptional": "Opzionale",
             "questionCountPlaceholder": "Lascia vuoto per includerle tutte",
             "questionCountUseAll": "Usa tutte",
             "questionCountHint": "Verrà selezionato un sottoinsieme casuale dalle domande incollate.",
-            "generate": "Genera Quiz"
+            "generate": "Genera Quiz",
+            "formatHelp": {
+                "showToggle": "Come formattare il testo del quiz?",
+                "hideToggle": "Nascondi guida formato",
+                "intro": "Usa questa struttura per permettere a Paste2Quiz di leggere correttamente il contenuto:",
+                "ruleQuestion": "Inizia ogni domanda con @Q:",
+                "ruleAnswer": "Aggiungi le risposte errate con @A:",
+                "ruleCorrect": "Segna ogni risposta corretta con @A*:",
+                "ruleSpacing": "Lascia una riga vuota tra una domanda e la successiva per maggiore leggibilità.",
+                "exampleLabel": "Esempio di formato",
+                "exampleTemplate": "@Q: Qual è la capitale della Francia?\n@A: Madrid\n@A: Berlino\n@A*: Parigi\n@A: Roma\n\n@Q: Quali pianeti sono giganti gassosi?\n@A*: Giove\n@A: Terra\n@A: Marte\n@A*: Saturno",
+                "basePromptLabel": "Prompt base per generare domande dalle tue fonti",
+                "basePromptHint": "Copia questo prompt, incollalo nel tuo strumento AI insieme ai tuoi appunti o al materiale.",
+                "basePromptTemplate": "Trasforma la seguente fonte in un quiz usando ESATTAMENTE questa sintassi:\n\n@Q: testo della domanda\n@A: risposta errata\n@A*: risposta corretta\n\nRegole:\n- Includi 4 risposte per domanda.\n- Includi almeno 1 risposta corretta (@A*).\n- Per le domande con risposte multiple, contrassegna tutte le opzioni corrette con @A*.\n- Restituisci solo il contenuto del quiz in questo formato. Nessuna introduzione o spiegazione.",
+                "copyButton": "Copia prompt",
+                "copySuccess": "Prompt copiato",
+                "copyError": "Impossibile copiare il prompt base. Copialo manualmente."
+            }
         },
         "errors": {
             "emptyInput": "Inserisci il testo del quiz!",

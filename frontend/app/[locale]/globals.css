@@ -621,6 +621,160 @@ section {
     margin-bottom: 30px;
 }
 
+.quiz-format-help-toggle-row {
+    margin-bottom: 16px;
+}
+
+.quiz-format-help-toggle {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--background-tertiary));
+    background: color-mix(in srgb, var(--accent) 8%, var(--background-secondary));
+    color: var(--text);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
+}
+
+.quiz-format-help-toggle:hover {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--background-tertiary));
+    color: var(--accent);
+}
+
+.quiz-format-help-toggle-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quiz-format-help-toggle-question-icon {
+    color: var(--accent);
+    flex-shrink: 0;
+    font-size: 0.92rem;
+}
+
+.quiz-format-help-toggle-arrow {
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    transition: transform 160ms ease;
+}
+
+.quiz-format-help-toggle-arrow-open {
+    transform: rotate(180deg);
+}
+
+.quiz-format-help-panel {
+    margin-bottom: 18px;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--background-tertiary));
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 6%, var(--background-secondary));
+    display: grid;
+    gap: 12px;
+}
+
+.quiz-format-help-intro {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.quiz-format-help-rules {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 6px;
+}
+
+.quiz-format-help-rules li {
+    color: var(--text-muted);
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+.quiz-format-help-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 15px;
+}
+
+.quiz-format-code {
+    margin: 0;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--background-tertiary);
+    background: var(--background-secondary);
+    white-space: pre-wrap;
+    overflow-x: auto;
+    color: var(--text-muted);
+    font-size: 0.81rem;
+    line-height: 1.55;
+    font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.quiz-format-prompt-card {
+    display: grid;
+    gap: 8px;
+}
+
+.quiz-format-code-wrap {
+    position: relative;
+}
+
+.quiz-format-code-prompt {
+    padding-top: 50px;
+}
+
+.quiz-format-help-copy {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.quiz-format-copy-button {
+    justify-self: start;
+    font-size: 12px !important;
+    padding: 8px 12px !important;
+}
+
+.quiz-format-copy-button-floating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    padding: 7px 10px;
+    font-size: 0.75rem;
+    border-radius: 10px;
+}
+
+@media (max-width: 450px) {
+    .quiz-format-copy-button-floating {
+        position: absolute;
+        width: calc(100% - 20px) !important;
+        bottom: 10px;
+        top: auto;
+        right: 10px;
+        left: 10px;
+        z-index: 1;
+        padding: 7px 10px;
+        font-size: 0.75rem;
+        border-radius: 10px;
+    }
+
+    .quiz-format-code-prompt {
+        padding-top: 10px;
+        padding-bottom: 50px;
+    }
+}
+
 .quiz-example {
     margin-bottom: 18px;
     padding: 16px 18px;
@@ -642,7 +796,7 @@ section {
     border: 1px solid var(--background-tertiary);
     background: var(--background-secondary);
     color: var(--text);
-    padding: 14px 16px;
+    padding: 14px 14px;
     font-size: 0.96rem;
     line-height: 1.6;
     transition: border-color 120ms ease, box-shadow 120ms ease;
@@ -1185,85 +1339,52 @@ section {
 }
 
 .app-toast {
+    --toast-tone: var(--accent);
     position: relative;
     overflow: hidden;
     border-radius: 12px;
-    border: 1px solid color-mix(in srgb, var(--background-tertiary) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--toast-tone) 36%, var(--background-tertiary));
     background:
         linear-gradient(
-            165deg,
-            color-mix(in srgb, var(--background-secondary) 92%, var(--text) 8%),
-            var(--background-secondary)
+            145deg,
+            color-mix(in srgb, var(--toast-tone) 14%, var(--background-secondary)),
+            color-mix(in srgb, var(--toast-tone) 6%, var(--background-secondary))
         );
-    color: var(--text);
+    color: color-mix(in srgb, var(--toast-tone) 78%, var(--text));
     padding: 12px 13px;
     padding-left: 15px;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 12px 26px color-mix(in srgb, var(--toast-tone) 14%, rgba(0, 0, 0, 0.22)),
+        0 2px 4px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(6px);
     transform-origin: right center;
     animation: toast-enter 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.app-toast-leaving,
-.app-toast-error.app-toast-leaving,
-.app-toast-success.app-toast-leaving {
-    animation: toast-exit 240ms cubic-bezier(0.4, 0, 1, 1) both;
-}
-
-.app-toast-error {
-    border-color: color-mix(in srgb, var(--error-text) 56%, transparent);
-    background:
-        linear-gradient(
-            145deg,
-            color-mix(in srgb, var(--error-text) 22%, var(--background-secondary)),
-            color-mix(in srgb, var(--error-text) 9%, var(--background-secondary))
-        );
-    color: var(--error-text);
-    box-shadow:
-        0 14px 30px color-mix(in srgb, var(--error-text) 20%, transparent),
-        0 2px 4px rgba(0, 0, 0, 0.1);
-    animation:
-        toast-enter 260ms cubic-bezier(0.22, 1, 0.36, 1) both,
-        toast-error-attention 420ms ease-out 120ms;
-}
-
-.app-toast-error::before {
+.app-toast::before {
     content: "";
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
     width: 4px;
-    background: color-mix(in srgb, var(--error-text) 82%, #ffffff 18%);
+    background: color-mix(in srgb, var(--toast-tone) 78%, #ffffff 22%);
 }
 
-.app-toast-error::after {
-    content: "!";
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 19px;
-    height: 19px;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--error-text) 60%, transparent);
-    background: color-mix(in srgb, var(--error-text) 20%, transparent);
-    display: grid;
-    place-items: center;
-    font-size: 0.78rem;
-    line-height: 1;
-    font-weight: 800;
+.app-toast-leaving {
+    animation: toast-exit 240ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.app-toast-error {
+    --toast-tone: var(--error-text);
 }
 
 .app-toast-success {
-    border-color: color-mix(in srgb, var(--success-text) 45%, transparent);
-    background:
-        linear-gradient(
-            145deg,
-            color-mix(in srgb, var(--success-text) 16%, var(--background-secondary)),
-            color-mix(in srgb, var(--success-text) 7%, var(--background-secondary))
-        );
-    color: var(--success-text);
+    --toast-tone: var(--success-text);
+}
+
+.app-toast-info {
+    --toast-tone: var(--accent);
 }
 
 .app-toast-message {
@@ -1273,10 +1394,6 @@ section {
     font-weight: 600;
     letter-spacing: 0.01em;
     color: inherit;
-}
-
-.app-toast-error .app-toast-message {
-    padding-right: 26px;
 }
 
 @keyframes reveal-up {
@@ -1319,28 +1436,8 @@ section {
     }
 }
 
-@keyframes toast-error-attention {
-    0% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-
-    35% {
-        transform: translate3d(-3px, 0, 0) scale(1.005);
-    }
-
-    70% {
-        transform: translate3d(2px, 0, 0) scale(1.005);
-    }
-
-    100% {
-        transform: translate3d(0, 0, 0) scale(1);
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
     .app-toast,
-    .app-toast-error,
-    .app-toast-success,
     .app-toast-leaving {
         animation-duration: 1ms;
     }

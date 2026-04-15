@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { FaChevronDown, FaQuestionCircle } from "react-icons/fa";
 
 import {
     areAnswersExactMatch,
@@ -20,8 +21,6 @@ import { QuizQuestion, QuizValidationError } from "@/lib/quiz/types";
 
 type Screen = "input" | "quiz" | "results";
 const QUIZ_TOAST_DURATION_MS = 5000;
-
-const EXAMPLE_TEXT = `@Q: What is the capital of France?\n@A: Madrid\n@A: Berlin\n@A*: Paris\n@A: Rome\n\n@Q: Which planets are gas giants?\n@A*: Jupiter\n@A: Earth\n@A: Mars\n@A*: Saturn`;
 
 function formatElapsedTime(totalSeconds: number): string {
     const hours = Math.floor(totalSeconds / 3600);
@@ -49,6 +48,7 @@ export function QuizApp() {
     const [quizStartTimestamp, setQuizStartTimestamp] = useState<number | null>(null);
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [completedElapsedSeconds, setCompletedElapsedSeconds] = useState<number | null>(null);
+    const [showFormatHelp, setShowFormatHelp] = useState(false);
 
     const answeredQuestionsCount = useMemo(
         () => userAnswers.filter((answers) => answers.length > 0).length,
@@ -93,6 +93,28 @@ export function QuizApp() {
             durationMs: QUIZ_TOAST_DURATION_MS,
             placement: "bottom-right",
         });
+    }
+
+    function handleCopyBasePrompt(): void {
+        const basePrompt = t("create.formatHelp.basePromptTemplate");
+
+        if (typeof navigator === "undefined" || !navigator.clipboard?.writeText) {
+            showQuizError(t("create.formatHelp.copyError"));
+            return;
+        }
+
+        navigator.clipboard
+            .writeText(basePrompt)
+            .then(() => {
+                showToast(t("create.formatHelp.copySuccess"), {
+                    variant: "success",
+                    durationMs: QUIZ_TOAST_DURATION_MS,
+                    placement: "bottom-right",
+                });
+            })
+            .catch(() => {
+                showQuizError(t("create.formatHelp.copyError"));
+            });
     }
 
     function getValidationErrorMessage(error: QuizValidationError): string {
@@ -245,6 +267,7 @@ export function QuizApp() {
         setQuizStartTimestamp(null);
         setElapsedSeconds(0);
         setCompletedElapsedSeconds(null);
+        setShowFormatHelp(false);
         setScreen("input");
     }
 
@@ -253,7 +276,71 @@ export function QuizApp() {
             {screen === "input" && (
                 <section className="quiz-panel">
                     <h2 className="quiz-panel-title">{t("create.title")}</h2>
-                    <p className="quiz-example">{`${t("create.exampleLabel")}\n${EXAMPLE_TEXT}`}</p>
+
+                    <div className="quiz-format-help-toggle-row">
+                        <button
+                            type="button"
+                            className="quiz-format-help-toggle"
+                            aria-expanded={showFormatHelp}
+                            aria-controls="quiz-format-help"
+                            onClick={() => setShowFormatHelp((currentValue) => !currentValue)}
+                        >
+                            <span className="quiz-format-help-toggle-main">
+                                <FaQuestionCircle
+                                    className="quiz-format-help-toggle-question-icon"
+                                    aria-hidden="true"
+                                />
+                                <span>
+                                    {showFormatHelp
+                                        ? t("create.formatHelp.hideToggle")
+                                        : t("create.formatHelp.showToggle")}
+                                </span>
+                            </span>
+                            <FaChevronDown
+                                className={[
+                                    "quiz-format-help-toggle-arrow",
+                                    showFormatHelp ? "quiz-format-help-toggle-arrow-open" : "",
+                                ].join(" ")}
+                                aria-hidden="true"
+                            />
+                        </button>
+                    </div>
+
+                    {showFormatHelp && (
+                        <div id="quiz-format-help" className="quiz-format-help-panel">
+                            <p className="quiz-format-help-intro">{t("create.formatHelp.intro")}</p>
+
+                            <ul className="quiz-format-help-rules">
+                                <li>{t("create.formatHelp.ruleQuestion")}</li>
+                                <li>{t("create.formatHelp.ruleAnswer")}</li>
+                                <li>{t("create.formatHelp.ruleCorrect")}</li>
+                                <li>{t("create.formatHelp.ruleSpacing")}</li>
+                            </ul>
+
+                            <p className="quiz-format-help-label">{t("create.formatHelp.exampleLabel")}</p>
+                            <pre className="quiz-format-code">{t("create.formatHelp.exampleTemplate")}</pre>
+
+                            <div className="quiz-format-prompt-card">
+                                <p className="quiz-format-help-label">
+                                    {t("create.formatHelp.basePromptLabel")}
+                                </p>
+                                <p className="quiz-format-help-copy">{t("create.formatHelp.basePromptHint")}</p>
+                                <div className="quiz-format-code-wrap">
+                                    <pre className="quiz-format-code quiz-format-code-prompt">
+                                        {t("create.formatHelp.basePromptTemplate")}
+                                    </pre>
+
+                                    <button
+                                        type="button"
+                                        className="quiz-secondary-button quiz-format-copy-button quiz-format-copy-button-floating"
+                                        onClick={handleCopyBasePrompt}
+                                    >
+                                        {t("create.formatHelp.copyButton")}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <textarea
                         className="quiz-textarea"
