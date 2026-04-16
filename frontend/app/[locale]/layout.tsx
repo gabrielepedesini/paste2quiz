@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from "next-intl/server";
+import { Analytics } from "@vercel/analytics/next";
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -47,6 +48,7 @@ export default async function RootLayout( {children, params,}: {children: React.
 							<Header />
 							<main className="site-main">{children}</main>
 							<Footer />
+							<Analytics />
 						</ToastProvider>
 					</NextIntlClientProvider>
 				</ThemeProvider>
