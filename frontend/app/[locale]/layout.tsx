@@ -29,7 +29,7 @@ const merriweather = Merriweather({
 // Metadata
 export const metadata = {
 	title: "Paste2Quiz",
-	description: "Transform your text into an interactive quiz with Paste2Quiz. Perfect for educators, students, and content creators looking to engage their audience and enhance learning experiences.",
+	description: "Transform your text into an interactive quiz with Paste2Quiz",
 	icons: {
 		icon: "/img/favicon.png",
 	},

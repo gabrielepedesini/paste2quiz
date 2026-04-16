@@ -331,6 +331,7 @@ section {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    max-width: none;
 }
 
 .site-footer-copy {
@@ -486,18 +487,19 @@ section {
     border: 1px solid var(--background-tertiary);
     border-radius: 12px;
     background: var(--background-transparent);
-    padding: 14px;
+    padding: 20px;
 }
 
 .lp-simple-step {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    gap: 12px;
+    gap: 20px;
+    align-items: center;
 }
 
 .lp-simple-step span {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
@@ -505,7 +507,7 @@ section {
     background: color-mix(in srgb, var(--accent) 16%, var(--background-secondary));
     color: var(--accent);
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: 16px;
 }
 
 .lp-simple-step h3,
@@ -730,10 +732,6 @@ section {
     position: relative;
 }
 
-.quiz-format-code-prompt {
-    padding-top: 50px;
-}
-
 .quiz-format-help-copy {
     color: var(--text-muted);
     font-size: 0.8rem;
@@ -753,6 +751,11 @@ section {
     padding: 7px 10px;
     font-size: 0.75rem;
     border-radius: 10px;
+    display: none !important;
+}
+
+.quiz-format-code-wrap:hover .quiz-format-copy-button-floating {
+    display: block !important;
 }
 
 @media (max-width: 450px) {
@@ -767,6 +770,7 @@ section {
         padding: 7px 10px;
         font-size: 0.75rem;
         border-radius: 10px;
+        display: inline-flex !important;
     }
 
     .quiz-format-code-prompt {

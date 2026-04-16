@@ -3,19 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { FaChevronDown, FaQuestionCircle } from "react-icons/fa";
-
-import {
-    areAnswersExactMatch,
-    calculatePercentage,
-    calculateScore,
-    getScoreMessageTier,
-} from "@/lib/quiz/scoring";
+import { areAnswersExactMatch, calculatePercentage, calculateScore, getScoreMessageTier, } from "@/lib/quiz/scoring";
 import { parseQuizText, randomizeQuestions } from "@/lib/quiz/parser";
-import {
-    validateParsedQuestions,
-    validateQuestionCount,
-    validateQuizInput,
-} from "@/lib/quiz/validation";
+import { validateParsedQuestions, validateQuestionCount, validateQuizInput, } from "@/lib/quiz/validation";
 import { useToast } from "@/components/ToastProvider";
 import { QuizQuestion, QuizValidationError } from "@/lib/quiz/types";
 

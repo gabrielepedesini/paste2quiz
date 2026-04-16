@@ -11,8 +11,11 @@ export async function Footer() {
     return (
         <footer className="site-footer">
             <div className="container site-footer-inner">
-                <p className="site-footer-copy">
+                {/* <p className="site-footer-copy">
                     {t("createdBy")} <a href={WEBSITE_URL} target="_blank" rel="noreferrer">{t("creatorName")}</a>
+                </p> */}
+                <p className="site-footer-copy">
+                    &copy; {new Date().getFullYear()} {t("siteCopyright")}
                 </p>
                 <div className="site-footer-links">
                     <a

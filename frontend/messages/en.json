@@ -86,7 +86,8 @@
         "github": "GitHub",
         "githubLabel": "Open GitHub repository",
         "linkedin": "LinkedIn",
-        "linkedinLabel": "Open LinkedIn profile"
+        "linkedinLabel": "Open LinkedIn profile",
+        "siteCopyright": "Paste2Quiz"
     },
     "quiz": {
         "create": {
