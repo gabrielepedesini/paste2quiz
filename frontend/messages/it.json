@@ -146,6 +146,12 @@
             "next": "Successiva →",
             "finish": "Concludi Quiz"
         },
+        "keyboard": {
+            "title": "Comandi da tastiera",
+            "answers": "Seleziona risposte",
+            "navigation": "Naviga tra domande",
+            "submit": "Vai avanti o concludi"
+        },
         "results": {
             "excellent": "Eccellente! Hai padroneggiato l'argomento.",
             "great": "Ottimo lavoro! Hai una buona comprensione.",

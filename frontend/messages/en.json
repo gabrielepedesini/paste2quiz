@@ -146,6 +146,12 @@
             "next": "Next →",
             "finish": "Finish Quiz"
         },
+        "keyboard": {
+            "title": "Keyboard controls",
+            "answers": "Select answers",
+            "navigation": "Navigate questions",
+            "submit": "Go next or finish"
+        },
         "results": {
             "excellent": "Excellent! You've mastered this topic.",
             "great": "Great job! You have a good understanding.",

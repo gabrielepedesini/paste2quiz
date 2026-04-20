@@ -1045,6 +1045,43 @@ section {
     color: var(--text-muted);
 }
 
+.quiz-keyboard-help {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.quiz-keyboard-help-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--background-tertiary));
+    background: color-mix(in srgb, var(--accent) 8%, var(--background-secondary));
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.quiz-keyboard-help-item kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 20px;
+    min-width: 20px;
+    padding: 1px 6px;
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--background-tertiary));
+    background: var(--background-secondary);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    font-family: var(--font-geist-mono), "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
 .quiz-question-map-dot {
     width: 10px;
     height: 10px;
@@ -1165,6 +1202,11 @@ section {
 .quiz-answer-selected {
     border-color: var(--accent);
     background: color-mix(in srgb, var(--accent) 14%, var(--background-secondary));
+}
+
+.quiz-answer-keyboard-active {
+    border-color: color-mix(in srgb, var(--accent) 65%, var(--background-tertiary));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .quiz-answer-correct {

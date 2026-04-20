@@ -24,6 +24,35 @@ function formatElapsedTime(totalSeconds: number): string {
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
+function isEditableElementTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) {
+        return false;
+    }
+
+    const tagName = target.tagName.toLowerCase();
+
+    return (
+        tagName === "input" ||
+        tagName === "textarea" ||
+        tagName === "select" ||
+        target.isContentEditable
+    );
+}
+
+function isInteractiveElementTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) {
+        return false;
+    }
+
+    if (isEditableElementTarget(target)) {
+        return true;
+    }
+
+    const tagName = target.tagName.toLowerCase();
+
+    return tagName === "button" || tagName === "a";
+}
+
 export function QuizApp() {
     const t = useTranslations("quiz");
     const { showToast } = useToast();
@@ -39,6 +68,7 @@ export function QuizApp() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [completedElapsedSeconds, setCompletedElapsedSeconds] = useState<number | null>(null);
     const [showFormatHelp, setShowFormatHelp] = useState(false);
+    const [focusedAnswerIndex, setFocusedAnswerIndex] = useState(0);
 
     const answeredQuestionsCount = useMemo(
         () => userAnswers.filter((answers) => answers.length > 0).length,
@@ -76,6 +106,152 @@ export function QuizApp() {
             window.clearInterval(timerId);
         };
     }, [quizFinished, quizStartTimestamp, screen]);
+
+    useEffect(() => {
+        if (screen !== "quiz" || quizFinished || !activeQuestion) {
+            return;
+        }
+
+        const handleKeyDown = (event: KeyboardEvent): void => {
+            if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) {
+                return;
+            }
+
+            if (isEditableElementTarget(event.target)) {
+                return;
+            }
+
+            if (event.repeat) {
+                return;
+            }
+
+            if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+                const answersCount = activeQuestion.answers.length;
+
+                if (answersCount < 1) {
+                    return;
+                }
+
+                const step = event.key === "ArrowUp" ? -1 : 1;
+
+                event.preventDefault();
+                setFocusedAnswerIndex((previousIndex) => {
+                    const normalizedIndex =
+                        ((previousIndex + step) % answersCount + answersCount) % answersCount;
+
+                    return normalizedIndex;
+                });
+
+                return;
+            }
+
+            if (event.key === "Enter") {
+                if (isInteractiveElementTarget(event.target)) {
+                    return;
+                }
+
+                if (focusedAnswerIndex >= activeQuestion.answers.length) {
+                    return;
+                }
+
+                event.preventDefault();
+                handleSelectAnswer(focusedAnswerIndex);
+                return;
+            }
+
+            if (event.key === "ArrowLeft") {
+                if (currentQuestion > 0) {
+                    event.preventDefault();
+                    handlePreviousQuestion();
+                }
+
+                return;
+            }
+
+            if (event.key === "ArrowRight") {
+                event.preventDefault();
+
+                if (isLastQuestion) {
+                    handleFinishQuiz();
+                } else {
+                    handleNextQuestion();
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [
+        activeQuestion,
+        currentQuestion,
+        focusedAnswerIndex,
+        handleFinishQuiz,
+        handleNextQuestion,
+        handlePreviousQuestion,
+        handleSelectAnswer,
+        isLastQuestion,
+        quizFinished,
+        screen,
+    ]);
+
+    useEffect(() => {
+        if (screen !== "input" && screen !== "results") {
+            return;
+        }
+
+        const handleKeyDown = (event: KeyboardEvent): void => {
+            if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) {
+                return;
+            }
+
+            if (isEditableElementTarget(event.target)) {
+                return;
+            }
+
+            if (event.repeat) {
+                return;
+            }
+
+            if (screen === "input") {
+                if (event.key === "Enter" && !isInteractiveElementTarget(event.target)) {
+                    event.preventDefault();
+                    handleGenerateQuiz();
+                }
+
+                return;
+            }
+
+            const normalizedKey = event.key.toLowerCase();
+
+            if (normalizedKey === "r") {
+                event.preventDefault();
+                handleTryAgain();
+                return;
+            }
+
+            if (normalizedKey === "n") {
+                event.preventDefault();
+                handleNewQuiz();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [handleGenerateQuiz, handleNewQuiz, handleTryAgain, screen]);
+
+    useEffect(() => {
+        if (screen !== "quiz") {
+            return;
+        }
+
+        setFocusedAnswerIndex(0);
+    }, [activeQuestion, screen]);
 
     function showQuizError(message: string): void {
         showToast(message, {
@@ -173,6 +349,7 @@ export function QuizApp() {
         setQuizStartTimestamp(Date.now());
         setElapsedSeconds(0);
         setCompletedElapsedSeconds(null);
+        setFocusedAnswerIndex(0);
         setScreen("quiz");
     }
 
@@ -216,6 +393,7 @@ export function QuizApp() {
         }
 
         setCurrentQuestion(questionIndex);
+        setFocusedAnswerIndex(0);
     }
 
     function handleFinishQuiz(): void {
@@ -244,6 +422,7 @@ export function QuizApp() {
         setQuizStartTimestamp(Date.now());
         setElapsedSeconds(0);
         setCompletedElapsedSeconds(null);
+        setFocusedAnswerIndex(0);
         setScreen("quiz");
     }
 
@@ -458,6 +637,9 @@ export function QuizApp() {
                                 if (isSelected && !quizFinished) {
                                     classNames.push("quiz-answer-selected");
                                 }
+                                if (answerIndex === focusedAnswerIndex) {
+                                    classNames.push("quiz-answer-keyboard-active");
+                                }
                                 if (showCorrect) {
                                     classNames.push("quiz-answer-correct");
                                 }
@@ -470,7 +652,10 @@ export function QuizApp() {
                                         key={`${activeQuestion.question}-${answer}`}
                                         type="button"
                                         className={classNames.join(" ")}
-                                        onClick={() => handleSelectAnswer(answerIndex)}
+                                        onClick={() => {
+                                            setFocusedAnswerIndex(answerIndex);
+                                            handleSelectAnswer(answerIndex);
+                                        }}
                                     >
                                         {answer}
                                     </button>
@@ -486,6 +671,7 @@ export function QuizApp() {
                                 className="quiz-secondary-button"
                                 onClick={handlePreviousQuestion}
                                 disabled={currentQuestion === 0}
+                                aria-keyshortcuts="ArrowLeft"
                             >
                                 {t("controls.previous")}
                             </button>
@@ -495,6 +681,7 @@ export function QuizApp() {
                                     type="button"
                                     className="quiz-secondary-button"
                                     onClick={handleNextQuestion}
+                                    aria-keyshortcuts="ArrowRight"
                                 >
                                     {t("controls.next")}
                                 </button>
@@ -505,6 +692,7 @@ export function QuizApp() {
                                     type="button"
                                     className="quiz-primary-button"
                                     onClick={handleFinishQuiz}
+                                    aria-keyshortcuts="ArrowRight"
                                 >
                                     {t("controls.finish")}
                                 </button>
@@ -613,6 +801,7 @@ export function QuizApp() {
                             type="button"
                             className="quiz-primary-button"
                             onClick={handleTryAgain}
+                            aria-keyshortcuts="R"
                         >
                             {t("results.tryAgain")}
                         </button>
@@ -620,6 +809,7 @@ export function QuizApp() {
                             type="button"
                             className="quiz-secondary-button"
                             onClick={handleNewQuiz}
+                            aria-keyshortcuts="N"
                         >
                             {t("results.newQuiz")}
                         </button>
