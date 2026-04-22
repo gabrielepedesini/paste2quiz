@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { FaChevronDown, FaQuestionCircle } from "react-icons/fa";
+import { FaCheckCircle, FaChevronDown, FaQuestionCircle, FaTimesCircle } from "react-icons/fa";
 import { areAnswersExactMatch, calculatePercentage, calculateScore, getScoreMessageTier, } from "@/lib/quiz/scoring";
 import { parseQuizText, randomizeQuestions } from "@/lib/quiz/parser";
 import { validateParsedQuestions, validateQuestionCount, validateQuizInput, } from "@/lib/quiz/validation";
@@ -763,20 +763,17 @@ export function QuizApp() {
                                         const isCorrectAnswer = question.correctIndices.includes(answerIndex);
 
                                         const answerClassNames = ["quiz-review-answer"];
-                                        let answerLabel = "";
 
                                         if (isCorrectAnswer) {
-                                            answerClassNames.push("quiz-review-correct");
-                                            answerLabel = t("results.correctLabel");
+                                            answerClassNames.push("quiz-review-answer-correct");
+                                        }
+
+                                        if (isUserAnswer) {
+                                            answerClassNames.push("quiz-review-answer-selected");
                                         }
 
                                         if (isUserAnswer && !isCorrectAnswer) {
-                                            answerClassNames.push("quiz-review-user-wrong");
-                                            answerLabel = t("results.yourAnswer");
-                                        }
-
-                                        if (isUserAnswer && isCorrectAnswer) {
-                                            answerLabel = t("results.yourAnswer");
+                                            answerClassNames.push("quiz-review-answer-selected-wrong");
                                         }
 
                                         return (
@@ -784,10 +781,44 @@ export function QuizApp() {
                                                 key={`${question.question}-${answerIndex}-${answer}`}
                                                 className={answerClassNames.join(" ")}
                                             >
-                                                <span>{answer}</span>
-                                                {answerLabel.length > 0 && (
-                                                    <span className="quiz-answer-label">{answerLabel}</span>
-                                                )}
+                                                <div className="quiz-review-answer-main">
+                                                    <span className="quiz-review-answer-text">{answer}</span>
+                                                    <span className="quiz-review-answer-tags">
+                                                        {isUserAnswer && (
+                                                            <span
+                                                                className={[
+                                                                    "quiz-review-answer-tag",
+                                                                    "quiz-review-answer-tag-user",
+                                                                    isCorrectAnswer
+                                                                        ? "quiz-review-answer-tag-user-correct"
+                                                                        : "quiz-review-answer-tag-user-wrong",
+                                                                ].join(" ")}
+                                                            >
+                                                                {t("results.yourAnswer")}
+                                                            </span>
+                                                        )}
+
+                                                        {isCorrectAnswer && (
+                                                            <span className="quiz-review-answer-tag quiz-review-answer-tag-correct">
+                                                                <FaCheckCircle
+                                                                    className="quiz-review-answer-tag-icon"
+                                                                    aria-hidden="true"
+                                                                />
+                                                                {t("results.correctLabel")}
+                                                            </span>
+                                                        )}
+
+                                                        {isUserAnswer && !isCorrectAnswer && (
+                                                            <span className="quiz-review-answer-tag quiz-review-answer-tag-incorrect">
+                                                                <FaTimesCircle
+                                                                    className="quiz-review-answer-tag-icon"
+                                                                    aria-hidden="true"
+                                                                />
+                                                                {t("results.incorrect")}
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                </div>
                                             </div>
                                         );
                                     })}
