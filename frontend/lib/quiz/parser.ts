@@ -8,18 +8,19 @@ export function parseQuizText(text: string): QuizQuestion[] {
 
     const parsedQuestions: QuizQuestion[] = [];
     let currentQuestion: QuizQuestion | null = null;
+    let currentField: "question" | "answer" | null = null;
 
     for (const line of lines) {
         if (line.startsWith("@Q:")) {
             if (currentQuestion) {
                 parsedQuestions.push(currentQuestion);
             }
-
             currentQuestion = {
                 question: line.substring(3).trim(),
                 answers: [],
                 correctIndices: [],
             };
+            currentField = "question";
             continue;
         }
 
@@ -27,6 +28,7 @@ export function parseQuizText(text: string): QuizQuestion[] {
             if (currentQuestion) {
                 currentQuestion.correctIndices.push(currentQuestion.answers.length);
                 currentQuestion.answers.push(line.substring(4).trim());
+                currentField = "answer";
             }
             continue;
         }
@@ -34,7 +36,16 @@ export function parseQuizText(text: string): QuizQuestion[] {
         if (line.startsWith("@A:")) {
             if (currentQuestion) {
                 currentQuestion.answers.push(line.substring(3).trim());
+                currentField = "answer";
             }
+            continue;
+        }
+
+        // Continuation line, so append to whichever field was last being built
+        if (currentQuestion && currentField === "question") {
+            currentQuestion.question += " " + line;
+        } else if (currentQuestion && currentField === "answer" && currentQuestion.answers.length > 0) {
+            currentQuestion.answers[currentQuestion.answers.length - 1] += " " + line;
         }
     }
 
