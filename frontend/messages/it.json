@@ -111,7 +111,7 @@
                 "exampleTemplate": "@Q: Qual è la capitale della Francia?\n@A: Madrid\n@A: Berlino\n@A*: Parigi\n@A: Roma\n\n@Q: Quali pianeti sono giganti gassosi?\n@A*: Giove\n@A: Terra\n@A: Marte\n@A*: Saturno",
                 "basePromptLabel": "Prompt base per generare domande dalle tue fonti",
                 "basePromptHint": "Copia questo prompt, incollalo nel tuo strumento AI insieme ai tuoi appunti o al materiale.",
-                "basePromptTemplate": "Trasforma la seguente fonte in un quiz usando ESATTAMENTE questa sintassi:\n\n@Q: testo della domanda\n@A: risposta errata\n@A*: risposta corretta\n\nRegole:\n- Includi 4 risposte per domanda.\n- Includi almeno 1 risposta corretta (@A*).\n- Per le domande con risposte multiple, contrassegna tutte le opzioni corrette con @A*.\n- Restituisci solo il contenuto del quiz in questo formato. Nessuna introduzione o spiegazione.",
+                "basePromptTemplate": "Trasforma la seguente fonte in un quiz usando ESATTAMENTE questa sintassi:\n\n@Q: testo della domanda\n@A: risposta sbagliata\n@A*: risposta corretta\n\nRegole:\n- Includi 4 risposte per domanda.\n- Includi almeno 1 risposta corretta (@A*).\n- Per domande a risposte multiple, marca tutte le opzioni corrette con @A*.\n- Restituisci il risultato come testo markdown semplice in un unico blocco di codice copiabile.\n- Non aggiungere spiegazioni o testo extra fuori dal blocco di codice.",
                 "copyButton": "Copia prompt",
                 "copySuccess": "Prompt copiato",
                 "copyError": "Impossibile copiare il prompt base. Copialo manualmente."

@@ -111,7 +111,7 @@
                 "exampleTemplate": "@Q: What is the capital of France?\n@A: Madrid\n@A: Berlin\n@A*: Paris\n@A: Rome\n\n@Q: Which planets are gas giants?\n@A*: Jupiter\n@A: Earth\n@A: Mars\n@A*: Saturn",
                 "basePromptLabel": "Base prompt to generate questions from your sources",
                 "basePromptHint": "Copy this prompt, paste it into your AI tool accompanied by your notes or material.",
-                "basePromptTemplate": "Turn the following source into a quiz using EXACTLY this syntax:\n\n@Q: question text\n@A: wrong answer\n@A*: correct answer\n\nRules:\n- Include 4 answers per question.\n- Include at least 1 correct answer (@A*).\n- For multi-answer questions, mark all correct options with @A*.\n- Return only quiz content in this format. No intro or explanation.",
+                "basePromptTemplate": "Turn the following source into a quiz using EXACTLY this syntax:\n\n@Q: question text\n@A: wrong answer\n@A*: correct answer\n\nRules:\n- Include 4 answers per question.\n- Include at least 1 correct answer (@A*).\n- For multi-answer questions, mark all correct options with @A*.\n- Return the result as markdown plain text in a single copyable code block.\n- Do not add explanations or extra text outside the code block.",
                 "copyButton": "Copy prompt",
                 "copySuccess": "Prompt copied",
                 "copyError": "Could not copy the base prompt. Please copy it manually."
