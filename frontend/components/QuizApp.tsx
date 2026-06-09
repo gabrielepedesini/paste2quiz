@@ -68,7 +68,7 @@ export function QuizApp() {
     const [elapsedSeconds, setElapsedSeconds] = useState(0);
     const [completedElapsedSeconds, setCompletedElapsedSeconds] = useState<number | null>(null);
     const [showFormatHelp, setShowFormatHelp] = useState(false);
-    const [focusedAnswerIndex, setFocusedAnswerIndex] = useState(0);
+    const [focusedAnswerIndex, setFocusedAnswerIndex] = useState(-1);
 
     const answeredQuestionsCount = useMemo(
         () => userAnswers.filter((answers) => answers.length > 0).length,
@@ -132,6 +132,12 @@ export function QuizApp() {
                     return;
                 }
 
+                if (focusedAnswerIndex === -1) {
+                    setFocusedAnswerIndex(0);
+                    event.preventDefault();
+                    return;
+                }
+
                 const step = event.key === "ArrowUp" ? -1 : 1;
 
                 event.preventDefault();
@@ -147,6 +153,10 @@ export function QuizApp() {
 
             if (event.key === "Enter") {
                 if (isInteractiveElementTarget(event.target)) {
+                    return;
+                }
+
+                if (focusedAnswerIndex === -1) {
                     return;
                 }
 
@@ -250,7 +260,7 @@ export function QuizApp() {
             return;
         }
 
-        setFocusedAnswerIndex(0);
+        setFocusedAnswerIndex(-1);
     }, [activeQuestion, screen]);
 
     function showQuizError(message: string): void {
@@ -349,7 +359,7 @@ export function QuizApp() {
         setQuizStartTimestamp(Date.now());
         setElapsedSeconds(0);
         setCompletedElapsedSeconds(null);
-        setFocusedAnswerIndex(0);
+        setFocusedAnswerIndex(-1);
         setScreen("quiz");
     }
 
@@ -393,7 +403,7 @@ export function QuizApp() {
         }
 
         setCurrentQuestion(questionIndex);
-        setFocusedAnswerIndex(0);
+        setFocusedAnswerIndex(-1);
     }
 
     function handleFinishQuiz(): void {
@@ -422,7 +432,7 @@ export function QuizApp() {
         setQuizStartTimestamp(Date.now());
         setElapsedSeconds(0);
         setCompletedElapsedSeconds(null);
-        setFocusedAnswerIndex(0);
+        setFocusedAnswerIndex(-1);
         setScreen("quiz");
     }
 
