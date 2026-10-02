@@ -93,11 +93,14 @@
         "create": {
             "title": "Create your quiz",
             "placeholder": "Paste your quiz text here in the required format...",
-            "questionCountLabel": "How many questions should be randomly selected for the quiz?",
+            "questionOrderLabel": "Random question order",
+            "questionOrderRandomHelp": "Questions will appear in a random order.",
+            "questionOrderOriginalHelp": "Questions will appear in the order you pasted them.",
+            "questionCountLabel": "How many questions should be included in the quiz?",
             "questionCountOptional": "Optional",
             "questionCountPlaceholder": "Leave empty to include all",
             "questionCountUseAll": "Use all",
-            "questionCountHint": "A random subset will be selected from your pasted questions.",
+            "questionCountHint": "Leave empty to include all questions.",
             "generate": "Generate Quiz",
             "formatHelp": {
                 "showToggle": "How to format the quiz text?",

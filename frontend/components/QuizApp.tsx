@@ -60,6 +60,7 @@ export function QuizApp() {
     const [screen, setScreen] = useState<Screen>("input");
     const [quizInput, setQuizInput] = useState("");
     const [questionCountInput, setQuestionCountInput] = useState("");
+    const [randomQuestionOrder, setRandomQuestionOrder] = useState(true);
     const [questions, setQuestions] = useState<QuizQuestion[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [userAnswers, setUserAnswers] = useState<number[][]>([]);
@@ -347,14 +348,13 @@ export function QuizApp() {
                 ? Number(questionCountInput.trim())
                 : parsedQuestions.length;
 
-        const randomizedQuestions = randomizeQuestions(parsedQuestions).slice(
-            0,
-            selectedQuestionCount,
-        );
+        const selectedQuestions = randomQuestionOrder
+            ? randomizeQuestions(parsedQuestions).slice(0, selectedQuestionCount)
+            : randomizeQuestions(parsedQuestions.slice(0, selectedQuestionCount), Math.random, false);
 
-        setQuestions(randomizedQuestions);
+        setQuestions(selectedQuestions);
         setCurrentQuestion(0);
-        setUserAnswers(new Array(randomizedQuestions.length).fill(null).map(() => []));
+        setUserAnswers(new Array(selectedQuestions.length).fill(null).map(() => []));
         setQuizFinished(false);
         setQuizStartTimestamp(Date.now());
         setElapsedSeconds(0);
@@ -527,6 +527,27 @@ export function QuizApp() {
                         onChange={(event) => setQuizInput(event.target.value)}
                         placeholder={t("create.placeholder")}
                     />
+
+                    <div className="quiz-question-order-field">
+                        <div className="quiz-question-order-copy">
+                            <span id="randomQuestionOrderLabel" className="quiz-question-order-label">
+                                {t("create.questionOrderLabel")}
+                            </span>
+                            <p className="quiz-question-order-help">
+                                {randomQuestionOrder
+                                    ? t("create.questionOrderRandomHelp")
+                                    : t("create.questionOrderOriginalHelp")}
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            className="quiz-question-order-toggle"
+                            role="switch"
+                            aria-checked={randomQuestionOrder}
+                            aria-labelledby="randomQuestionOrderLabel"
+                            onClick={() => setRandomQuestionOrder((current) => !current)}
+                        />
+                    </div>
 
                     <div className="quiz-question-count-field">
                         <div className="quiz-question-count-head">

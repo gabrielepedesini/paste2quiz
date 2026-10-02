@@ -93,11 +93,14 @@
         "create": {
             "title": "Crea il tuo quiz",
             "placeholder": "Incolla qui il testo del quiz usando il formato richiesto...",
-            "questionCountLabel": "Quante domande vuoi includere in maniera casuale nel quiz?",
+            "questionOrderLabel": "Ordine casuale delle domande",
+            "questionOrderRandomHelp": "Le domande appariranno in ordine casuale.",
+            "questionOrderOriginalHelp": "Le domande appariranno nell'ordine in cui le hai incollate.",
+            "questionCountLabel": "Quante domande vuoi includere nel quiz?",
             "questionCountOptional": "Opzionale",
             "questionCountPlaceholder": "Lascia vuoto per includerle tutte",
             "questionCountUseAll": "Usa tutte",
-            "questionCountHint": "Verrà selezionato un sottoinsieme casuale dalle domande incollate.",
+            "questionCountHint": "Lascia vuoto per includere tutte le domande.",
             "generate": "Genera Quiz",
             "formatHelp": {
                 "showToggle": "Come formattare il testo del quiz?",

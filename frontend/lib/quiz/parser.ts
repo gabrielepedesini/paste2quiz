@@ -70,6 +70,7 @@ function shuffleArray<T>(array: T[], random: () => number): T[] {
 export function randomizeQuestions(
     questions: QuizQuestion[],
     random: () => number = Math.random,
+    shuffleQuestionOrder: boolean = true,
 ): QuizQuestion[] {
     const randomizedQuestions = questions.map((question) => {
         const correctAnswers = question.correctIndices.map((index) => question.answers[index]);
@@ -89,5 +90,5 @@ export function randomizeQuestions(
         };
     });
 
-    return shuffleArray(randomizedQuestions, random);
+    return shuffleQuestionOrder ? shuffleArray(randomizedQuestions, random) : randomizedQuestions;
 }

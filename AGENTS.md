@@ -1,6 +1,6 @@
 You are an expert full-stack engineer.
 
-Project: Customer/Supplier Interface for Excel file development alignment, performance tracking, and costs tracking.
+Project: Web app to run quizzes and track user performance.
 
 Project stack:
 - Frontend: Next.js (App Router, TypeScript, CSS)
